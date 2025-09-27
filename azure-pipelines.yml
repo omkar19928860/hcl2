@@ -11,7 +11,7 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'init'
-           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/dev'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/Dev'
            backendServiceArm: 'hclservicrc'
            backendAzureRmStorageAccountName: 'hclsa456233'
            backendAzureRmContainerName: 'tfstate'
