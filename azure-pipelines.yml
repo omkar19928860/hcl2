@@ -21,7 +21,7 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'init'
-           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/Dev'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
            backendServiceArm: 'hclservicrc'
            backendAzureRmStorageAccountName: 'hclsa456233'
            backendAzureRmContainerName: 'tfstate'
@@ -35,16 +35,16 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'init'
-           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/Dev'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
            backendServiceArm: 'hclservicrc'
            backendAzureRmStorageAccountName: 'hclsa456233'
            backendAzureRmContainerName: 'tfstate'
-           backendAzureRmKey: 'dev.terraform.tfstate'
+           backendAzureRmKey: '$ {{  parameters.env }}.terraform.tfstate'
        - task: TerraformTask@5
          inputs:
            provider: 'azurerm'
            command: 'plan'
-           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/Dev'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
            environmentServiceNameAzureRM: 'hclservicrc'
 
   
