@@ -1,0 +1,9 @@
+variable "resource_group" {}
+variable "location" {}
+variable "vm_namef" {}
+variable "nic_nameb" {}
+variable "subnetfront_name" {}
+variable "subnetbackend_name" {}
+variable "vnet_name" {}
+variable "nic_namef" {}
+variable "vm_nameb" {}
