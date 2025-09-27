@@ -1,5 +1,21 @@
 trigger: 
  - main
-
-
+pool: hclpool
+stages: 
+  - stage: terraforminit
+    displayName: TERRAFORM INIT
+    jobs:
+    - job : terraforminit
+      steps:
+      - task: TerraformTask@5
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/parent/dev'
+          backendServiceArm: 'hclservicrc'
+          backendAzureRmStorageAccountName: 'hclsa456233'
+          backendAzureRmContainerName: 'tfstate'
+          backendAzureRmKey: 'dev.terraform.tfstate'
+          
+ 
 
