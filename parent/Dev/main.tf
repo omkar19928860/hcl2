@@ -1,12 +1,12 @@
 module "resource_group" {
-  source         = "../child/resourcegroup"
+  source         = "../../child/resourcegroup"
   resource_group = "hclrg1"
   location       = "Central India"
 }
 
 
 module "vnet" {
-  source         = "../child/vnet"
+  source         = "../../child/vnet"
   vnet_name      = "hcl-vnet"
   resource_group = "hclrg1"
   location       = "Central India"
@@ -15,7 +15,7 @@ module "vnet" {
 }
 
 module "subnetfront" {
-  source             = "../child/subnet"
+  source             = "../../child/subnet"
   resource_group     = "hclrg1"
   vnet_name          = "hcl-vnet"
   address_prefixes1  = ["10.0.0.0/26"]   # subnet-front
@@ -28,7 +28,7 @@ module "subnetfront" {
 }
 
 module "vm_name" {
-  source             = "../child/virtualmachine"
+  source             = "../../child/virtualmachine"
   resource_group     = "hclrg1"
   location           = "Central India"
   vm_namef           = "hcl-vmf"
@@ -42,7 +42,7 @@ module "vm_name" {
 
 }
 module "public_ip" {
-  source         = "../child/pip"
+  source         = "../../child/pip"
   resource_group = "hclrg1"
   location       = "Central India"
   public_ip      = "hcl-pip"
@@ -50,7 +50,7 @@ module "public_ip" {
 
 }
 module "bastion_name" {
-  source         = "../child/bastiion"
+  source         = "../../child/bastiion"
   resource_group = "hclrg1"
   location       = "Central India"
   bastion_name   = "hcl-bastion"
@@ -62,14 +62,14 @@ module "bastion_name" {
 }
 
 module "pip1" {
-  source         = "../child/lbpip"
+  source         = "../../child/lbpip"
   resource_group = "hclrg1"
   location       = "Central India"
   lb_pip         = "hcl-lb-pip"
   depends_on     = [module.resource_group, module.vm_name]
 }
 module "lb" {
-  source                          = "../child/lb"
+  source                          = "../../child/lb"
   lb_name                         = "hcl-lb"
   resource_group                  = "hclrg1"
   location                        = "Central India"
