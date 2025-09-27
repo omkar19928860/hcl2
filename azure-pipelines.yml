@@ -16,6 +16,27 @@ stages:
            backendAzureRmStorageAccountName: 'hclsa456233'
            backendAzureRmContainerName: 'tfstate'
            backendAzureRmKey: 'dev.terraform.tfstate'
+ - stage: terraformplan
+   displayName: TERRAFORMPLAN
+   jobs:
+    - job: plan
+      steps:
+       - task: TerraformTask@5
+         inputs:
+           provider: 'azurerm'
+           command: 'init'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/Dev'
+           backendServiceArm: 'hclservicrc'
+           backendAzureRmStorageAccountName: 'hclsa456233'
+           backendAzureRmContainerName: 'tfstate'
+           backendAzureRmKey: 'dev.terraform.tfstate'
+       - task: TerraformTask@5
+         inputs:
+           provider: 'azurerm'
+           command: 'plan'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/Dev'
+           environmentServiceNameAzureRM: 'hclservicrc'
+
   
           
  
