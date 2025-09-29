@@ -46,6 +46,17 @@ stages:
            command: 'plan'
            workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
            environmentServiceNameAzureRM: 'hclservicrc'
+ - stage: manualvalidation
+   displayName: Manual
+   jobs:
+     - job: validation
+       pool: server
+       steps:
+       - task: ManualValidation@1
+         inputs:
+           notifyUsers: 'omkarsingh9487@gmail.com'
+           onTimeout: 'resume'
+
 
   
           
