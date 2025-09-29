@@ -29,16 +29,8 @@ stages:
  - stage: terraformplan
    displayName: TERRAFORMPLAN
    jobs:
-     - job: plan
-       steps:
-       
-       - task: TerraformTask@5
-         inputs:
-           provider: 'azurerm'
-           command: 'plan'
-           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
-           environmentServiceNameAzureRM: 'hclservicrc'
-           template: templates/terraform-init.yaml
+    - template: parent/Dev/terrafrom-init.yaml
+            
  - stage: manualvalidation
    displayName: Manual
    jobs:
