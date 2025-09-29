@@ -29,7 +29,9 @@ stages:
  - stage: terraformplan
    displayName: TERRAFORMPLAN
    jobs:
-    - template: 
+     - template: templates/terraform-init.yaml
+     - job: plan
+       steps:
        - task: TerraformTask@5
          inputs:
            provider: 'azurerm'
