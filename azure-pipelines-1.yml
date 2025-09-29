@@ -1,0 +1,81 @@
+parameters:
+  - name: env
+    displayName: ENVIRONMENT
+    type: string
+    default: Dev
+    values:
+     - Dev
+     - prod
+
+
+trigger : none
+pool: hclpool
+stages:
+ - stage: terraforminit
+   displayName: TERRAFORMINIT
+   jobs:
+     - job: terraforminit
+       displayName: TERRAFORMINIT
+       steps:
+       - task: TerraformTask@5
+         inputs:
+           provider: 'azurerm'
+           command: 'init'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
+           backendServiceArm: 'hclservicrc'
+           backendAzureRmStorageAccountName: 'hclsa456233'
+           backendAzureRmContainerName: 'tfstate'
+           backendAzureRmKey: 'dev.terraform.tfstate'
+ - stage: terraformplan
+   displayName: TERRAFORMPLAN
+   jobs:
+     - job: plan
+       steps:
+       - template: templates/terraform-init.yaml
+       - task: TerraformTask@5
+         inputs:
+           provider: 'azurerm'
+           command: 'plan'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
+           environmentServiceNameAzureRM: 'hclservicrc'
+ - stage: manualvalidation
+   displayName: Manual
+   jobs:
+     - job: validation
+       pool: server
+       steps:
+       - task: ManualValidation@1
+         inputs:
+           notifyUsers: 'omkarsingh9487@gmail.com'
+           onTimeout: 'resume'
+ - stage: apply
+   displayName: terraformapply
+   jobs:
+     - job: apply
+       steps:
+        
+       - task: TerraformTask@5
+         inputs:
+           provider: 'azurerm'
+           command: 'init'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
+           backendServiceArm: 'hclservicrc'
+           backendAzureRmStorageAccountName: 'hclsa456233'
+           backendAzureRmContainerName: 'tfstate'
+           backendAzureRmKey: '$ {{  parameters.env }}.terraform.tfstate'
+       - task: TerraformTask@5
+         inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          environmentServiceNameAzureRM: 'hclservicrc'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
+       
+       
+       
+
+
+  
+          
+ 
+
+
