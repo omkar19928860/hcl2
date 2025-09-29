@@ -31,13 +31,14 @@ stages:
    jobs:
      - job: plan
        steps:
-       - template: templates/terraform-init.yaml
+       
        - task: TerraformTask@5
          inputs:
            provider: 'azurerm'
            command: 'plan'
            workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
            environmentServiceNameAzureRM: 'hclservicrc'
+           template: templates/terraform-init.yaml
  - stage: manualvalidation
    displayName: Manual
    jobs:
