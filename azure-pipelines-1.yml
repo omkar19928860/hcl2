@@ -38,6 +38,8 @@ stages:
            command: 'plan'
            workingDirectory: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}'
            environmentServiceNameAzureRM: 'hclservicrc'
+       - publish: '$(System.DefaultWorkingDirectory)/parent/${{ parameters.env }}/tfplan.json'
+         artifact: terraformplan
  - stage: manualvalidation
    displayName: Manual
    jobs:
